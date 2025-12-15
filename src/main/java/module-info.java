@@ -12,4 +12,8 @@ module org.codex.apktoolgui.apktoolgui {
 
     opens org.codex.apktoolgui to javafx.fxml;
     exports org.codex.apktoolgui;
+    exports org.codex.apktoolgui.view;
+    opens org.codex.apktoolgui.view to javafx.fxml;
+    exports org.codex.apktoolgui.services;
+    opens org.codex.apktoolgui.services to javafx.fxml;
 }
