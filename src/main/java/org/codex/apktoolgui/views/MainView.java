@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.codex.apktoolgui.services.ApkToolService;
 import org.codex.apktoolgui.services.ApkEditorService;
 import org.codex.apktoolgui.services.executor.CommandExecutor;
+import org.codex.apktoolgui.utils.UiUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -30,13 +31,6 @@ public class MainView {
     public static TextArea outputArea;
     public static ProgressBar progressBar;
     public static Label statusLabel;
-
-    // File choosers
-    public final FileChooser fileChooser = new FileChooser();
-    public final DirectoryChooser directoryChooser = new DirectoryChooser();
-
-    // Theme
-    public static boolean darkMode = true;
 
     private Stage primaryStage;
     String apktoolPath = getApkToolPath();
@@ -97,13 +91,13 @@ public class MainView {
     }
 
     public void initializeFileChoosers() {
-        fileChooser.setTitle("Select APK File");
-        fileChooser.getExtensionFilters().addAll(
+        UiUtils.fileChooser.setTitle("Select APK File");
+        UiUtils.fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("APK Files", "*.apk"),
                 new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
-        directoryChooser.setTitle("Select Directory");
+        UiUtils.directoryChooser.setTitle("Select Directory");
     }
 
     private MenuBar createMenuBar(Stage stage) {
@@ -131,8 +125,8 @@ public class MainView {
         darkThemeItem.setToggleGroup(themeGroup);
         lightThemeItem.setToggleGroup(themeGroup);
 
-        darkThemeItem.setOnAction(e -> switchTheme(true));
-        lightThemeItem.setOnAction(e -> switchTheme(false));
+        darkThemeItem.setOnAction(e -> UiUtils.switchTheme(true));
+        lightThemeItem.setOnAction(e -> UiUtils.switchTheme(false));
 
         themeMenu.getItems().addAll(darkThemeItem, lightThemeItem);
 
@@ -191,10 +185,10 @@ public class MainView {
         progressBar.getStyleClass().add("dark-progress-bar");
 
         // Create copy/clear buttons
-        Button clearButton = createStyledButton("Clear", "small");
+        Button clearButton = UiUtils.createStyledButton("Clear", "small");
         clearButton.setOnAction(e -> outputArea.clear());
 
-        Button copyButton = createStyledButton("Copy", "small");
+        Button copyButton = UiUtils.createStyledButton("Copy", "small");
         copyButton.setOnAction(e -> {
             outputArea.selectAll();
             outputArea.copy();
@@ -245,37 +239,6 @@ public class MainView {
         return bottomBox;
     }
 
-    // Helper Methods for UI Components
-    public Button createStyledButton(String text, String style) {
-        Button button = new Button(text);
-        button.getStyleClass().addAll("dark-button", style);
-        return button;
-    }
-
-    public CheckBox createCheckBox(String text, String tooltip) {
-        CheckBox checkBox = new CheckBox(text);
-        checkBox.getStyleClass().add("dark-checkbox");
-        if (tooltip != null) {
-            checkBox.setTooltip(new Tooltip(tooltip));
-        }
-        return checkBox;
-    }
-
-    public Label createIcon(String emoji) {
-        Label icon = new Label(emoji);
-        icon.getStyleClass().add("icon");
-        return icon;
-    }
-
-    // Theme Switching
-    public void switchTheme(boolean dark) {
-        darkMode = dark;
-        // In a real implementation, you would reload the CSS
-        appendOutput("Theme switched to " + (dark ? "Dark" : "Light") + " mode");
-    }
-
-
-
     public void loadSettings() {
         try {
             Path configPath = Path.of(System.getProperty("user.home"), ".apktool-gui.properties");
@@ -286,7 +249,7 @@ public class MainView {
                 }
 
                 apktoolPath = props.getProperty("apktool.path", "apktool.jar");
-                darkMode = Boolean.parseBoolean(props.getProperty("dark.mode", "true"));
+                UiUtils.darkMode = Boolean.parseBoolean(props.getProperty("dark.mode", "true"));
 
                 appendOutput("✅ Settings loaded from: " + configPath);
             }

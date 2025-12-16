@@ -2,6 +2,7 @@ package org.codex.apktoolgui.services;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.codex.apktoolgui.utils.UiUtils;
 import org.codex.apktoolgui.views.MainView;
 
 import java.io.File;
@@ -231,7 +232,7 @@ public class ApkToolService {
             Properties props = new Properties();
             props.setProperty("apktool.path", getApkToolPath());
             props.setProperty("default.dir", defaultDir);
-            props.setProperty("dark.mode", String.valueOf(MainView.darkMode));
+            props.setProperty("dark.mode", String.valueOf(UiUtils.darkMode));
 
             Path configPath = Path.of(System.getProperty("user.home"), ".apktool-gui.properties");
             try (OutputStream out = Files.newOutputStream(configPath)) {

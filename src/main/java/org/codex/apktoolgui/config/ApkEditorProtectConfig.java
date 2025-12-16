@@ -1,5 +1,5 @@
 // models/ApkEditorProtectConfig.java
-package org.codex.apktoolgui.models;
+package org.codex.apktoolgui.config;
 
 public class ApkEditorProtectConfig {
     private String keepType;

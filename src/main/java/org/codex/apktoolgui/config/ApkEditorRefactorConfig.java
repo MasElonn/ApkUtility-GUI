@@ -1,5 +1,5 @@
 
-package org.codex.apktoolgui.models;
+package org.codex.apktoolgui.config;
 
 public class ApkEditorRefactorConfig {
     private String publicXml;

@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.codex.apktoolgui.models.*;
+import org.codex.apktoolgui.config.*;
 import org.codex.apktoolgui.views.MainView;
 import org.codex.apktoolgui.services.ApkEditorService;
 import org.codex.apktoolgui.utils.UiUtils;
@@ -32,7 +32,7 @@ public class ApkEditorTab {
     public Tab createAPKEditorTab() {
         Tab apkEditorTab = new Tab("APKEDITOR");
         apkEditorTab.setClosable(false);
-        apkEditorTab.setGraphic(mainView.createIcon("⚡"));
+        apkEditorTab.setGraphic(UiUtils.createIcon("⚡"));
 
         // Create main container with 5 sections
         VBox mainBox = new VBox(15);
@@ -103,15 +103,15 @@ public class ApkEditorTab {
         apkPathField.setPromptText("Select APK file...");
         apkPathField.setPrefWidth(300);
 
-        Button browseApkButton = mainView.createStyledButton("Browse", "primary");
-        browseApkButton.setOnAction(e -> UiUtils.browseFile(mainView.fileChooser, apkPathField, "Select APK", "*.apk", "Select File"));
+        Button browseApkButton = UiUtils.createStyledButton("Browse", "primary");
+        browseApkButton.setOnAction(e -> UiUtils.browseFile(UiUtils.fileChooser, apkPathField, "Select APK", "*.apk", "Select File"));
 
         Label outputLabel = new Label("Output Directory:");
         TextField outputPathField = new TextField();
         outputPathField.setPromptText("(Optional) Default: apk_decompiled");
 
-        Button browseOutputButton = mainView.createStyledButton("Browse", "secondary");
-        browseOutputButton.setOnAction(e -> UiUtils.browseDirectory(mainView.directoryChooser, outputPathField));
+        Button browseOutputButton = UiUtils.createStyledButton("Browse", "secondary");
+        browseOutputButton.setOnAction(e -> UiUtils.browseDirectory(UiUtils.directoryChooser, outputPathField));
 
         fileGrid.add(apkLabel, 0, 0);
         fileGrid.add(apkPathField, 1, 0);
@@ -138,11 +138,11 @@ public class ApkEditorTab {
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
-        Button configButton = mainView.createStyledButton("⚙ Configure Options", "secondary");
+        Button configButton = UiUtils.createStyledButton("⚙ Configure Options", "secondary");
         configButton.setPrefWidth(180);
         configButton.setOnAction(e -> showDecompileOptionsDialog(configSummary));
 
-        Button executeButton = mainView.createStyledButton("▶ Decompile APK", "large-primary");
+        Button executeButton = UiUtils.createStyledButton("▶ Decompile APK", "large-primary");
         executeButton.setPrefWidth(180);
         executeButton.setOnAction(e -> {
             String apkPath = apkPathField.getText();
@@ -186,15 +186,15 @@ public class ApkEditorTab {
         inputPathField.setPromptText("Select decompiled directory...");
         inputPathField.setPrefWidth(300);
 
-        Button browseInputButton = mainView.createStyledButton("Browse", "primary");
-        browseInputButton.setOnAction(e -> UiUtils.browseDirectory(mainView.directoryChooser, inputPathField));
+        Button browseInputButton = UiUtils.createStyledButton("Browse", "primary");
+        browseInputButton.setOnAction(e -> UiUtils.browseDirectory(UiUtils.directoryChooser, inputPathField));
 
         Label outputLabel = new Label("Output APK:");
         TextField outputPathField = new TextField();
         outputPathField.setPromptText("(Optional) Default: output.apk");
 
-        Button browseOutputButton = mainView.createStyledButton("Browse", "secondary");
-        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(mainView.fileChooser, outputPathField, "Save APK", "*.apk", "Select File"));
+        Button browseOutputButton = UiUtils.createStyledButton("Browse", "secondary");
+        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(UiUtils.fileChooser, outputPathField, "Save APK", "*.apk", "Select File"));
 
         fileGrid.add(inputLabel, 0, 0);
         fileGrid.add(inputPathField, 1, 0);
@@ -221,11 +221,11 @@ public class ApkEditorTab {
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
-        Button configButton = mainView.createStyledButton("⚙ Configure Options", "secondary");
+        Button configButton = UiUtils.createStyledButton("⚙ Configure Options", "secondary");
         configButton.setPrefWidth(180);
         configButton.setOnAction(e -> showBuildOptionsDialog(configSummary));
 
-        Button executeButton = mainView.createStyledButton("▶ Build APK", "large-primary");
+        Button executeButton = UiUtils.createStyledButton("▶ Build APK", "large-primary");
         executeButton.setPrefWidth(180);
         executeButton.setOnAction(e -> {
             String inputPath = inputPathField.getText();
@@ -269,9 +269,9 @@ public class ApkEditorTab {
         inputPathField.setPromptText("Directory or XAPK/APKM/APKS file...");
         inputPathField.setPrefWidth(300);
 
-        Button browseInputButton = mainView.createStyledButton("Browse", "primary");
+        Button browseInputButton = UiUtils.createStyledButton("Browse", "primary");
         browseInputButton.setOnAction(e -> {
-            File file = mainView.directoryChooser.showDialog(null);
+            File file = UiUtils.directoryChooser.showDialog(null);
             if (file != null) {
                 inputPathField.setText(file.getAbsolutePath());
             }
@@ -281,8 +281,8 @@ public class ApkEditorTab {
         TextField outputPathField = new TextField();
         outputPathField.setPromptText("(Optional) Default: merged.apk");
 
-        Button browseOutputButton = mainView.createStyledButton("Browse", "secondary");
-        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(mainView.fileChooser, outputPathField, "Save Merged APK", "*.apk", "Select File"));
+        Button browseOutputButton = UiUtils.createStyledButton("Browse", "secondary");
+        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(UiUtils.fileChooser, outputPathField, "Save Merged APK", "*.apk", "Select File"));
 
         fileGrid.add(inputLabel, 0, 0);
         fileGrid.add(inputPathField, 1, 0);
@@ -309,11 +309,11 @@ public class ApkEditorTab {
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
-        Button configButton = mainView.createStyledButton("⚙ Configure Options", "secondary");
+        Button configButton = UiUtils.createStyledButton("⚙ Configure Options", "secondary");
         configButton.setPrefWidth(180);
         configButton.setOnAction(e -> showMergeOptionsDialog(configSummary));
 
-        Button executeButton = mainView.createStyledButton("▶ Merge APKs", "large-primary");
+        Button executeButton = UiUtils.createStyledButton("▶ Merge APKs", "large-primary");
         executeButton.setPrefWidth(180);
         executeButton.setOnAction(e -> {
             String inputPath = inputPathField.getText();
@@ -361,15 +361,15 @@ public class ApkEditorTab {
         apkPathField.setPromptText("Select APK file...");
         apkPathField.setPrefWidth(300);
 
-        Button browseApkButton = mainView.createStyledButton("Browse", "primary");
-        browseApkButton.setOnAction(e -> UiUtils.browseFile(mainView.fileChooser, apkPathField, "Select APK", "*.apk", "Select File"));
+        Button browseApkButton = UiUtils.createStyledButton("Browse", "primary");
+        browseApkButton.setOnAction(e -> UiUtils.browseFile(UiUtils.fileChooser, apkPathField, "Select APK", "*.apk", "Select File"));
 
         Label outputLabel = new Label("Output APK:");
         TextField outputPathField = new TextField();
         outputPathField.setPromptText("(Optional) Default: input_refactored.apk");
 
-        Button browseOutputButton = mainView.createStyledButton("Browse", "secondary");
-        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(mainView.fileChooser, outputPathField, "Save Refactored APK", "*.apk", "Select File"));
+        Button browseOutputButton = UiUtils.createStyledButton("Browse", "secondary");
+        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(UiUtils.fileChooser, outputPathField, "Save Refactored APK", "*.apk", "Select File"));
 
         fileGrid.add(apkLabel, 0, 0);
         fileGrid.add(apkPathField, 1, 0);
@@ -396,11 +396,11 @@ public class ApkEditorTab {
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
-        Button configButton = mainView.createStyledButton("⚙ Configure Options", "secondary");
+        Button configButton = UiUtils.createStyledButton("⚙ Configure Options", "secondary");
         configButton.setPrefWidth(180);
         configButton.setOnAction(e -> showRefactorOptionsDialog(configSummary));
 
-        Button executeButton = mainView.createStyledButton("▶ Refactor APK", "large-primary");
+        Button executeButton = UiUtils.createStyledButton("▶ Refactor APK", "large-primary");
         executeButton.setPrefWidth(180);
         executeButton.setOnAction(e -> {
             String apkPath = apkPathField.getText();
@@ -445,15 +445,15 @@ public class ApkEditorTab {
         apkPathField.setPromptText("Select APK file...");
         apkPathField.setPrefWidth(300);
 
-        Button browseApkButton = mainView.createStyledButton("Browse", "primary");
-        browseApkButton.setOnAction(e -> UiUtils.browseFile(mainView.fileChooser, apkPathField, "Select APK", "*.apk", "Select File"));
+        Button browseApkButton = UiUtils.createStyledButton("Browse", "primary");
+        browseApkButton.setOnAction(e -> UiUtils.browseFile(UiUtils.fileChooser, apkPathField, "Select APK", "*.apk", "Select File"));
 
         Label outputLabel = new Label("Output APK:");
         TextField outputPathField = new TextField();
         outputPathField.setPromptText("(Optional) Default: input_protected.apk");
 
-        Button browseOutputButton = mainView.createStyledButton("Browse", "secondary");
-        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(mainView.fileChooser, outputPathField, "Save Protected APK", "*.apk", "Select File"));
+        Button browseOutputButton = UiUtils.createStyledButton("Browse", "secondary");
+        browseOutputButton.setOnAction(e -> UiUtils.browseSaveFile(UiUtils.fileChooser, outputPathField, "Save Protected APK", "*.apk", "Select File"));
 
         fileGrid.add(apkLabel, 0, 0);
         fileGrid.add(apkPathField, 1, 0);
@@ -480,11 +480,11 @@ public class ApkEditorTab {
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
-        Button configButton = mainView.createStyledButton("⚙ Configure Options", "secondary");
+        Button configButton = UiUtils.createStyledButton("⚙ Configure Options", "secondary");
         configButton.setPrefWidth(180);
         configButton.setOnAction(e -> showProtectOptionsDialog(configSummary));
 
-        Button executeButton = mainView.createStyledButton("▶ Protect APK", "large-primary");
+        Button executeButton = UiUtils.createStyledButton("▶ Protect APK", "large-primary");
         executeButton.setPrefWidth(180);
         executeButton.setOnAction(e -> {
             String apkPath = apkPathField.getText();
@@ -680,7 +680,7 @@ public class ApkEditorTab {
         publicXmlField.setPrefWidth(200);
         Button browsePublicXmlButton = new Button("Browse");
         browsePublicXmlButton.setOnAction(e -> {
-            File file = mainView.fileChooser.showOpenDialog(null);
+            File file = UiUtils.fileChooser.showOpenDialog(null);
             if (file != null) publicXmlField.setText(file.getAbsolutePath());
         });
         publicXmlBox.getChildren().addAll(publicXmlLabel, publicXmlField, browsePublicXmlButton);

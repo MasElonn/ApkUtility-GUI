@@ -8,10 +8,18 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 public class CommandExecutor {
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    // Original method (for backward compatibility)
     public static void executeCommand(List<String> command, String statusMessage) {
+        executeCommand(command, statusMessage, null);
+    }
+
+    // New method with output consumer
+    public static void executeCommand(List<String> command, String statusMessage, Consumer<String> outputConsumer) {
         executor.submit(() -> {
             Platform.runLater(() -> {
                 MainView.progressBar.setVisible(true);
@@ -25,12 +33,23 @@ public class CommandExecutor {
                 pb.redirectErrorStream(true);
                 Process process = pb.start();
 
+                StringBuilder output = new StringBuilder();
+
                 try (BufferedReader reader = new BufferedReader(
                         new InputStreamReader(process.getInputStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         final String outputLine = line;
-                        Platform.runLater(() -> MainView.outputArea.appendText(outputLine + "\n"));
+                        output.append(outputLine).append("\n");
+
+                        Platform.runLater(() -> {
+                            // send to custom consumer if provided
+                            if (outputConsumer != null) {
+                                outputConsumer.accept(outputLine + "\n");
+                            // Send to main output area
+                            MainView.outputArea.appendText(outputLine + "\n");
+                            }
+                        });
                     }
                 }
 
@@ -41,11 +60,16 @@ public class CommandExecutor {
                     if (exitCode == 0) {
                         MainView.statusLabel.setText("Command completed successfully");
                         MainView.outputArea.appendText("\n[SUCCESS] Command completed with exit code: " + exitCode + "\n");
+
                     } else {
                         MainView.statusLabel.setText("Command failed with exit code: " + exitCode);
                         MainView.outputArea.appendText("\n[ERROR] Command failed with exit code: " + exitCode + "\n");
+                        if (outputConsumer != null) {
+                            outputConsumer.accept("\n[ERROR] Command failed with exit code: " + exitCode + "\n");
+                        }
                     }
                     MainView.outputArea.appendText("=".repeat(80) + "\n\n");
+
                 });
 
             } catch (Exception e) {
@@ -53,6 +77,9 @@ public class CommandExecutor {
                     MainView.progressBar.setVisible(false);
                     MainView.statusLabel.setText("Error executing command");
                     MainView.outputArea.appendText("\n[EXCEPTION] " + e.getMessage() + "\n");
+                    if (outputConsumer != null) {
+                        outputConsumer.accept("\n[EXCEPTION] " + e.getMessage() + "\n");
+                    }
                     e.printStackTrace();
                 });
             }

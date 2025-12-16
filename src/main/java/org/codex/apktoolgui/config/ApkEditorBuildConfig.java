@@ -1,4 +1,4 @@
-package org.codex.apktoolgui.models;
+package org.codex.apktoolgui.config;
 
 public class ApkEditorBuildConfig {
     private boolean buildFromXml;

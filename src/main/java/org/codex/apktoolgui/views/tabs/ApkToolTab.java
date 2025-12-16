@@ -7,10 +7,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import org.codex.apktoolgui.models.DecompileConfig;
-import org.codex.apktoolgui.models.RecompileConfig;
+import org.codex.apktoolgui.config.DecompileConfig;
+import org.codex.apktoolgui.config.RecompileConfig;
 import org.codex.apktoolgui.views.MainView;
 import org.codex.apktoolgui.services.ApkToolService;
+import org.codex.apktoolgui.utils.UiUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ApkToolTab {
     public Tab createAPKToolTab() {
         Tab apkToolTab = new Tab("APKTOOL");
         apkToolTab.setClosable(false);
-        apkToolTab.setGraphic(mainView.createIcon("🔨"));
+        apkToolTab.setGraphic(UiUtils.createIcon("🔨"));
 
         // Create main container with two sections
         VBox mainBox = new VBox(30);
@@ -85,9 +86,9 @@ public class ApkToolTab {
         apkPathField.getStyleClass().add("dark-text-field");
         apkPathField.setPrefWidth(400);
 
-        Button browseApkButton = mainView.createStyledButton("Browse", "primary");
+        Button browseApkButton = UiUtils.createStyledButton("Browse", "primary");
         browseApkButton.setOnAction(e -> {
-            File file = mainView.fileChooser.showOpenDialog(null);
+            File file = UiUtils.fileChooser.showOpenDialog(null);
             if (file != null) {
                 apkPathField.setText(file.getAbsolutePath());
             }
@@ -100,9 +101,9 @@ public class ApkToolTab {
         outputPathField.setPromptText("(Optional) Default: apk.out");
         outputPathField.getStyleClass().add("dark-text-field");
 
-        Button browseOutputButton = mainView.createStyledButton("Browse", "secondary");
+        Button browseOutputButton = UiUtils.createStyledButton("Browse", "secondary");
         browseOutputButton.setOnAction(e -> {
-            File dir = mainView.directoryChooser.showDialog(null);
+            File dir = UiUtils.directoryChooser.showDialog(null);
             if (dir != null) {
                 outputPathField.setText(dir.getAbsolutePath());
             }
@@ -134,11 +135,11 @@ public class ApkToolTab {
         HBox buttonBox = new HBox(15);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
-        Button decompileOptionsButton = mainView.createStyledButton("⚙ Configure Options", "secondary");
+        Button decompileOptionsButton = UiUtils.createStyledButton("⚙ Configure Options", "secondary");
         decompileOptionsButton.setPrefWidth(180);
         decompileOptionsButton.setOnAction(e -> showDecompileOptionsDialog(decompileConfigSummary));
 
-        Button decodeButton = mainView.createStyledButton("▶ Decompile APK", "large-primary");
+        Button decodeButton = UiUtils.createStyledButton("▶ Decompile APK", "large-primary");
         decodeButton.setPrefWidth(180);
         decodeButton.setOnAction(e -> {
             String apkPath = apkPathField.getText();
@@ -180,9 +181,9 @@ public class ApkToolTab {
         inputPathField.setPrefWidth(400);
         inputPathField.getStyleClass().add("dark-text-field");
 
-        Button browseInputButton = mainView.createStyledButton("Browse", "primary");
+        Button browseInputButton = UiUtils.createStyledButton("Browse", "primary");
         browseInputButton.setOnAction(e -> {
-            File dir = mainView.directoryChooser.showDialog(null);
+            File dir = UiUtils.directoryChooser.showDialog(null);
             if (dir != null) {
                 inputPathField.setText(dir.getAbsolutePath());
             }
@@ -195,14 +196,14 @@ public class ApkToolTab {
         outputPathField.setPromptText("(Optional) Default: dist/name.apk");
         outputPathField.getStyleClass().add("dark-text-field");
 
-        Button browseOutputButton = mainView.createStyledButton("Browse", "secondary");
+        Button browseOutputButton = UiUtils.createStyledButton("Browse", "secondary");
         browseOutputButton.setOnAction(e -> {
-            mainView.fileChooser.setTitle("Save APK");
-            File file = mainView.fileChooser.showSaveDialog(null);
+            UiUtils.fileChooser.setTitle("Save APK");
+            File file = UiUtils.fileChooser.showSaveDialog(null);
             if (file != null) {
                 outputPathField.setText(file.getAbsolutePath());
             }
-            mainView.fileChooser.setTitle("Select APK File");
+            UiUtils.fileChooser.setTitle("Select APK File");
         });
 
         fileGrid.add(inputLabel, 0, 0);
@@ -231,11 +232,11 @@ public class ApkToolTab {
         HBox buttonBox = new HBox(15);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
-        Button recompileOptionsButton = mainView.createStyledButton("⚙ Configure Options", "secondary");
+        Button recompileOptionsButton = UiUtils.createStyledButton("⚙ Configure Options", "secondary");
         recompileOptionsButton.setPrefWidth(180);
         recompileOptionsButton.setOnAction(e -> showRecompileOptionsDialog(recompileConfigSummary));
 
-        Button buildButton = mainView.createStyledButton("▶ Build APK", "large-primary");
+        Button buildButton = UiUtils.createStyledButton("▶ Build APK", "large-primary");
         buildButton.setPrefWidth(180);
         buildButton.setOnAction(e -> {
             String inputPath = inputPathField.getText();
@@ -321,7 +322,7 @@ public class ApkToolTab {
         frameworkField.setPrefWidth(200);
         Button browseFrameworkButton = new Button("Browse");
         browseFrameworkButton.setOnAction(e -> {
-            File dir = mainView.directoryChooser.showDialog(null);
+            File dir = UiUtils.directoryChooser.showDialog(null);
             if (dir != null) {
                 frameworkField.setText(dir.getAbsolutePath());
             }
@@ -461,7 +462,7 @@ public class ApkToolTab {
         frameworkField.setPrefWidth(200);
         Button browseFrameworkButton = new Button("Browse");
         browseFrameworkButton.setOnAction(e -> {
-            File dir = mainView.directoryChooser.showDialog(null);
+            File dir = UiUtils.directoryChooser.showDialog(null);
             if (dir != null) {
                 frameworkField.setText(dir.getAbsolutePath());
             }

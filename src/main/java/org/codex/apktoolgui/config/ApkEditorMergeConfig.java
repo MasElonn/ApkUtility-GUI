@@ -1,4 +1,4 @@
-package org.codex.apktoolgui.models;
+package org.codex.apktoolgui.config;
 
 public class ApkEditorMergeConfig {
     private String resDir;

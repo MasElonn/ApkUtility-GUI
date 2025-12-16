@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.codex.apktoolgui.services.executor.CommandExecutor;
 import org.codex.apktoolgui.views.MainView;
+import java.util.function.Consumer;
 
 public class ApkEditorService {
 
@@ -254,17 +255,17 @@ public class ApkEditorService {
     }
 
     // 6. Get APK information
-    public void executeGetInfo(String inputApk, String outputFile, String filterType,
-                               String framework, String frameworkVersion, String resourceId,
-                               String xmlStrings, String xmlTree, String outputType,
-                               boolean verbose, boolean activities, boolean appClass,
+    public void executeGetInfo(String inputApk, String outputFile,boolean verbose,
+                               String filterType, String framework, String frameworkVersion, String resourceId,
+                               String xmlStrings, String xmlTree,
+                               String outputType,boolean activities, boolean appClass,
                                boolean appIcon, boolean appName, boolean appRoundIcon,
                                boolean configurations, boolean dex, boolean forceDelete,
                                boolean languages, boolean listFiles, boolean listXmlFiles,
                                boolean locales, boolean minSdkVersion, boolean packageInfo,
                                boolean permissions, boolean resources, boolean signatures,
-                               boolean signaturesBase64, boolean strings, boolean targetSdkVersion,
-                               boolean versionCode, boolean versionName) {
+                               boolean signaturesBase64,  boolean targetSdkVersion,
+                               boolean versionCode, boolean versionName,Consumer<String> outputConsumer) {
 
         if (inputApk == null || inputApk.trim().isEmpty()) {
             MainView.showError("Please select an APK file to get information.");
@@ -339,35 +340,11 @@ public class ApkEditorService {
         if (resources) command.add("-resources");
         if (signatures) command.add("-signatures");
         if (signaturesBase64) command.add("-signatures-base64");
-        if (strings) command.add("-strings");
         if (targetSdkVersion) command.add("-target-sdk-version");
         if (versionCode) command.add("-version-code");
         if (versionName) command.add("-version-name");
 
-        CommandExecutor.executeCommand(command, "Getting APK information...");
-    }
-
-    // Helper method for basic info (simplified version)
-    public void executeGetBasicInfo(String inputApk, boolean verbose) {
-        if (inputApk == null || inputApk.trim().isEmpty()) {
-            MainView.showError("Please select an APK file.");
-            return;
-        }
-
-        List<String> command = new ArrayList<>();
-        command.add("java");
-        command.add("-jar");
-        command.add(getApkEditorPath());
-        command.add("info");
-        command.add("-i");
-        command.add(inputApk);
-
-        if (verbose) {
-            command.add("-v");
-            command.add("-resources");
-        }
-
-        CommandExecutor.executeCommand(command, "Getting basic APK information...");
+        CommandExecutor.executeCommand(command, "Getting APK information...",outputConsumer);
     }
 
 }
