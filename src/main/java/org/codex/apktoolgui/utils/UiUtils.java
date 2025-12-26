@@ -3,6 +3,7 @@ package org.codex.apktoolgui.utils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -215,9 +216,27 @@ public final class UiUtils {
     }
 
     // Theme Switching
-    public static void switchTheme(boolean dark) {
+    public static void switchTheme(Scene scene, boolean dark) {
         darkMode = dark;
-        // In a real implementation, you would reload the CSS
-        // appendOutput("Theme switched to " + (dark ? "Dark" : "Light") + " mode");
+        if (scene == null) return;
+        
+        scene.getStylesheets().clear();
+        String theme = dark ? "dark-theme.css" : "light-theme.css";
+        String cssPath = "/org/codex/apktoolgui/" + theme;
+        
+        java.net.URL resource = UiUtils.class.getResource(cssPath);
+        if (resource != null) {
+            scene.getStylesheets().add(resource.toExternalForm());
+        } else {
+            System.err.println("Theme not found: " + cssPath);
+        }
+        
+        // Save settings
+        try {
+            org.codex.apktoolgui.services.SettingsManager.getInstance().getSettings().setDarkMode(dark);
+            org.codex.apktoolgui.services.SettingsManager.getInstance().saveSettings();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

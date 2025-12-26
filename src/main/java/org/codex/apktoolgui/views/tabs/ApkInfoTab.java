@@ -6,10 +6,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-
 import org.codex.apktoolgui.config.ApkEditorGetInfoConfig;
 import org.codex.apktoolgui.services.ApkEditorService;
 import org.codex.apktoolgui.utils.ApkInfoParser;
@@ -128,7 +130,7 @@ public class ApkInfoTab {
             setLoadingState(true);
 
             apkEditorService.executeGetInfo(
-                    apkPath, "", false, "", "", "", "", "", "", "",
+                    apkPath, "", true, "", "", "", "", "", "", "",
                     infoConfig.isActivities(),
                     infoConfig.isAppClass(),
                     infoConfig.isAppIcon(),

@@ -1,0 +1,194 @@
+/* Modern Light Theme - "Not So Blinding" */
+.root {
+    /* Color Palette - Softer/Dimmer Light Mode */
+    -fx-base: #e6e8eb; /* Darker gray base */
+    -fx-background: #e6e8eb; 
+    -fx-control-inner-background: #f2f4f6; /* Off-white inputs */
+    -fx-control-inner-background-alt: #e6e8eb; 
+    -fx-text-base-color: #2e343a; /* Softer text */
+    -fx-text-inner-color: #2e343a;
+    -fx-selection-bar: #0969da;
+    -fx-selection-bar-non-focused: #0969da;
+    
+    /* Modern Palette Variables */
+    -color-bg-canvas: #e6e8eb; /* Much darker background */
+    -color-bg-surface: #ffffff; /* Keep cards white for contrast, or #f8f9fa */
+    -color-bg-surface-hover: #f2f4f6;
+    -color-border-subtle: #cbd2d9;
+    -color-primary: #0969da;
+    -color-primary-hover: #0756b1;
+    -color-accent: #0969da;
+    -color-danger: #cf222e;
+    -color-text-primary: #2e343a;
+    -color-text-secondary: #5c6570;
+    -color-separator: #cbd2d9;
+
+    -fx-font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* ===== LAYOUT & CONTAINERS ===== */
+.root-container {
+    -fx-background-color: -color-bg-canvas;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: -color-bg-canvas;
+    -fx-border-color: -color-border-subtle;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 10;
+    -fx-spacing: 5;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-text-secondary;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 10;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-text-fill: -color-text-primary;
+}
+
+.sidebar-button.active {
+    -fx-background-color: rgba(9, 105, 218, 0.1); /* Primary with opacity */
+    -fx-text-fill: -color-primary;
+    -fx-border-color: -color-primary;
+    -fx-border-width: 0 0 0 3; /* Left border indicator */
+    -fx-border-radius: 0; /* Square borders for indicator */
+    -fx-background-radius: 4;
+}
+
+.sidebar-title {
+    -fx-text-fill: -color-text-primary;
+    -fx-font-size: 18px;
+    -fx-font-weight: 900;
+    -fx-padding: 10 0 20 10;
+}
+
+/* Cards */
+.card {
+    -fx-background-color: -color-bg-surface;
+    -fx-background-radius: 8;
+    -fx-border-color: -color-border-subtle;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);
+    -fx-padding: 20;
+}
+
+.card-title {
+    -fx-text-fill: -color-text-primary;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 15 0;
+}
+
+/* ===== INPUTS ===== */
+.text-area, .text-field {
+    -fx-background-color: -color-bg-surface;
+    -fx-text-fill: -color-text-primary;
+    -fx-prompt-text-fill: -color-text-secondary;
+    -fx-background-radius: 6;
+    -fx-border-color: -color-border-subtle;
+    -fx-border-radius: 6;
+    -fx-padding: 8;
+}
+
+.text-area:focused, .text-field:focused {
+    -fx-border-color: -color-primary;
+    -fx-effect: dropshadow(three-pass-box, rgba(9, 105, 218, 0.2), 5, 0, 0, 0);
+}
+
+.text-area .content {
+    -fx-background-color: -color-bg-surface;
+}
+
+/* ===== BUTTONS ===== */
+.button {
+    -fx-background-color: -color-bg-surface;
+    -fx-text-fill: -color-text-primary;
+    -fx-background-radius: 6;
+    -fx-border-color: -color-border-subtle;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+    -fx-transition: -fx-background-color 0.2s;
+}
+
+.button:hover {
+    -fx-background-color: -color-bg-surface-hover;
+}
+
+.button-primary {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.button-primary:hover {
+    -fx-background-color: -color-primary-hover;
+    -fx-effect: dropshadow(three-pass-box, rgba(9, 105, 218, 0.2), 8, 0, 0, 2);
+}
+
+.button-icon {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4;
+}
+.button-icon:hover {
+    -fx-background-color: rgba(0,0,0,0.05);
+}
+
+/* ===== SCROLLBARS (Minimalist) ===== */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+.scroll-bar .thumb {
+    -fx-background-color: #d0d7de;
+    -fx-background-radius: 10;
+}
+.scroll-bar .thumb:hover {
+    -fx-background-color: #9ba6b3;
+}
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* ===== TERMINAL DRAWER ===== */
+.terminal-drawer {
+    -fx-background-color: #ffffff;
+    -fx-border-color: -color-border-subtle;
+    -fx-border-width: 1 0 0 0;
+}
+.terminal-text-area {
+    -fx-font-family: 'Cascadia Code', 'JetBrains Mono', monospace;
+    -fx-font-size: 13px;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #ffffff; 
+}
+.terminal-header {
+    -fx-background-color: #f6f8fa;
+    -fx-padding: 5 10;
+    -fx-border-color: -color-border-subtle;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* ===== UTILS ===== */
+.separator {
+    -fx-padding: 10 0; 
+}
+.separator .line {
+    -fx-border-color: -color-separator;
+    -fx-border-width: 1 0 0 0;
+}
+.label-dim {
+    -fx-text-fill: -color-text-secondary;
+    -fx-font-size: 12px;
+}

@@ -2,8 +2,8 @@ package org.codex.apktoolgui.services;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import org.codex.apktoolgui.utils.UiUtils;
 import org.codex.apktoolgui.services.executor.CommandExecutor;
+import org.codex.apktoolgui.utils.UiUtils;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -26,6 +26,21 @@ public class ApkToolService {
     }
 
     public static String getApkToolPath(){
+        // Use settings manager for path retrieval
+        try {
+            String configuredPath = org.codex.apktoolgui.services.SettingsManager.getInstance()
+                .getSettings().getApktoolPath();
+            if (configuredPath != null && !configuredPath.isEmpty()) {
+                File apktoolFile = new File(configuredPath);
+                if (apktoolFile.exists()) {
+                    return apktoolFile.getAbsolutePath();
+                }
+            }
+        } catch (Exception e) {
+            // Fall back to default if settings manager fails
+        }
+        
+        // Fallback to default location
         File apktoolPath = new File("lib/apktool.jar");
         if(apktoolPath.exists()){
             return apktoolPath.getAbsolutePath();

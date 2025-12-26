@@ -7,12 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import org.codex.apktoolgui.config.DecompileConfig;
 import org.codex.apktoolgui.config.RecompileConfig;
-import org.codex.apktoolgui.views.MainView;
 import org.codex.apktoolgui.services.ApkToolService;
 import org.codex.apktoolgui.utils.UiUtils;
+import org.codex.apktoolgui.views.MainView;
 
 import java.io.File;
 

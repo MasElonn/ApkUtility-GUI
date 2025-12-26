@@ -3,7 +3,9 @@ package org.codex.apktoolgui.views.tabs;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -68,7 +70,7 @@ public class UtilitiesTab {
             String input = zipInputField.getText();
             if(input.isEmpty()) { mainView.showError("Select input APK"); return; }
             String output = zipOutputField.getText().isEmpty() ? UiUtils.generateOutputFilePath(input, "_aligned") : zipOutputField.getText();
-            zipAlignService.alighApk(input, output);
+            zipAlignService.alignApk(input, output);
         });
 
         zipCard.getChildren().addAll(zipTitle, zipGrid, alignButton);

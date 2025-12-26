@@ -8,9 +8,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.codex.apktoolgui.config.*;
-import org.codex.apktoolgui.views.MainView;
 import org.codex.apktoolgui.services.ApkEditorService;
 import org.codex.apktoolgui.utils.UiUtils;
+import org.codex.apktoolgui.views.MainView;
 
 import java.io.File;
 

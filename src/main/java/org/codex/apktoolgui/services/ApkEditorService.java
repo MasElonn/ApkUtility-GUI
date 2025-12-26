@@ -1,9 +1,10 @@
 package org.codex.apktoolgui.services;
 
+import org.codex.apktoolgui.services.executor.CommandExecutor;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.codex.apktoolgui.services.executor.CommandExecutor;
 import java.util.function.Consumer;
 
 public class ApkEditorService {
@@ -17,6 +18,21 @@ public class ApkEditorService {
     }
 
     public static String getApkEditorPath() {
+        // Use settings manager for path retrieval
+        try {
+            String configuredPath = org.codex.apktoolgui.services.SettingsManager.getInstance()
+                .getSettings().getApkEditorPath();
+            if (configuredPath != null && !configuredPath.isEmpty()) {
+                File apkEditorFile = new File(configuredPath);
+                if (apkEditorFile.exists()) {
+                    return apkEditorFile.getAbsolutePath();
+                }
+            }
+        } catch (Exception e) {
+            // Fall back to default if settings manager fails
+        }
+        
+        // Fallback to default location
         File apkEditorPath = new File("lib/APKEditor.jar");
         if (apkEditorPath.exists()) {
             return apkEditorPath.getAbsolutePath();

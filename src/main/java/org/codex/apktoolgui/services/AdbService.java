@@ -1,10 +1,11 @@
 package org.codex.apktoolgui.services;
 
 
+import org.codex.apktoolgui.services.executor.CommandExecutor;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.codex.apktoolgui.services.executor.CommandExecutor;
 import java.util.function.Consumer;
 
 
@@ -18,7 +19,23 @@ public class AdbService {
     }
     
     public static String getAdbPath() {
-        // Check local lib folder first
+        // Use settings manager for path retrieval
+        try {
+            String configuredPath = org.codex.apktoolgui.services.SettingsManager.getInstance()
+                .getSettings().getAdbPath();
+            if (configuredPath != null && !configuredPath.isEmpty()) {
+                File adbFile = new File(configuredPath);
+                if (adbFile.exists()) {
+                    return adbFile.getAbsolutePath();
+                }
+                // If not found as file, might be in PATH, return configured value
+                return configuredPath;
+            }
+        } catch (Exception e) {
+            // Fall back to default if settings manager fails
+        }
+        
+        // Fallback to default location
         File adbFile = new File("lib/platform-tools/adb");
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
             adbFile = new File("lib/platform-tools/adb.exe");

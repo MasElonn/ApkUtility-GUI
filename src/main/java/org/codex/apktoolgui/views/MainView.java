@@ -9,18 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.codex.apktoolgui.services.ApkToolService;
-import org.codex.apktoolgui.services.ApkEditorService;
-import org.codex.apktoolgui.services.InjectDocService;
-import org.codex.apktoolgui.services.ZipAlignService;
-import org.codex.apktoolgui.services.LogOutput;
-import org.codex.apktoolgui.services.UserNotifier;
-import org.codex.apktoolgui.services.StatusHandler;
+import org.codex.apktoolgui.services.*;
 import org.codex.apktoolgui.services.executor.CommandExecutor;
 import org.codex.apktoolgui.utils.UiUtils;
+import org.codex.apktoolgui.config.SettingsConfig;
 import org.codex.apktoolgui.views.tabs.*;
 
-import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,7 +22,6 @@ import java.util.Objects;
 import java.util.Properties;
 
 import static org.codex.apktoolgui.services.ApkToolService.getApkToolPath;
-import org.codex.apktoolgui.services.AdbService;
 
 public class MainView implements LogOutput, UserNotifier, StatusHandler {
     
@@ -38,7 +31,10 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
     private InjectDocService injectDocService;
     private ZipAlignService zipAlignService;
     private AdbService adbService;
+    private ApkSignerService apkSignerService;
+    private AaptService aaptService;
     private CommandExecutor commandExecutor;
+    private SettingsManager settingsManager;
 
     // UI Components
     public TextArea outputArea;
@@ -55,6 +51,8 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
     private Node apkInfoView;
     private Node utilitiesView;
     private Node adbView;
+    private Node apkSignerView;
+    private Node settingsView;
 
     private Stage primaryStage;
     String apktoolPath = getApkToolPath();
@@ -83,6 +81,8 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
         apkInfoView = new ApkInfoTab(this, apkEditorService).createContent();
         utilitiesView = new UtilitiesTab(this, injectDocService, zipAlignService).createContent();
         adbView = new AdbTab(this, adbService).createContent();
+        apkSignerView = new ApkSignerTab(this, this, apkSignerService, aaptService).createContent();
+        settingsView = new SettingsTab(this, this, settingsManager).createContent();
 
         // Create Main Layout
         rootLayout = new BorderPane();
@@ -106,22 +106,15 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
 
         Scene scene = new Scene(rootLayout, 1000, 700);
 
-        // Apply dark theme CSS
-        scene.getStylesheets().add(
-                Objects.requireNonNull(
-                        getClass().getResource("/org/codex/apktoolgui/dark-theme.css"),
-                        "dark-theme.css not found on classpath"
-                ).toExternalForm()
-        );
-
         primaryStage.setScene(scene);
+        
+        // Load settings (applies theme)
+        loadSettings();
+        
         primaryStage.show();
 
         // Check for apktool
         apkToolService.checkApktoolAvailability();
-
-        // Load settings
-        loadSettings();
     }
 
     private VBox createSidebar() {
@@ -137,8 +130,10 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
         Button infoBtn = createSidebarButton("🔍 Info", apkInfoView);
         Button utilsBtn = createSidebarButton("🔧 Utilities", utilitiesView);
         Button adbBtn = createSidebarButton("📱 ADB Ops", adbView);
+        Button signerBtn = createSidebarButton("🔐 Signer", apkSignerView);
+        Button settingsBtn = createSidebarButton("⚙️ Settings", settingsView);
 
-        sidebar.getChildren().addAll(appTitle, apktoolBtn, apkEditorBtn, infoBtn, utilsBtn, adbBtn);
+        sidebar.getChildren().addAll(appTitle, apktoolBtn, apkEditorBtn, infoBtn, utilsBtn, adbBtn, signerBtn, settingsBtn);
         
         // Spacer to push bottom items down
         Region spacer = new Region();
@@ -149,7 +144,7 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
         Button themeBtn = createSidebarButton("🌗 Toggle Theme", null);
         themeBtn.setOnAction(e -> {
              // Simple toggle logic for demo, usually needs CSS reload
-             UiUtils.switchTheme(!UiUtils.darkMode);
+             UiUtils.switchTheme(primaryStage.getScene(), !UiUtils.darkMode);
         });
         sidebar.getChildren().add(themeBtn);
 
@@ -194,12 +189,15 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
     }
 
     private void initializeServices() {
+        settingsManager = SettingsManager.getInstance();
         commandExecutor = new CommandExecutor(this, this);
         apkToolService = new ApkToolService(this, this, commandExecutor);
         apkEditorService = new ApkEditorService(this, commandExecutor);
         injectDocService = new InjectDocService(this, commandExecutor);
         zipAlignService = new ZipAlignService(commandExecutor);
         adbService = new AdbService(this, commandExecutor);
+        apkSignerService = new ApkSignerService(this, this, commandExecutor);
+        aaptService = new AaptService(this, this, commandExecutor);
     }
 
     public void initializeFileChoosers() {
@@ -278,18 +276,18 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
 
     public void loadSettings() {
         try {
-            Path configPath = Path.of(System.getProperty("user.home"), ".apktool-gui.properties");
-            if (Files.exists(configPath)) {
-                Properties props = new Properties();
-                try (InputStream in = Files.newInputStream(configPath)) {
-                    props.load(in);
-                }
-                apktoolPath = props.getProperty("apktool.path", "apktool.jar");
-                UiUtils.darkMode = Boolean.parseBoolean(props.getProperty("dark.mode", "true"));
-                append("✅ Settings loaded.");
+            settingsManager.loadSettings();
+            SettingsConfig settings = settingsManager.getSettings();
+            
+            // Apply dark mode setting
+            UiUtils.darkMode = settings.isDarkMode();
+            if (primaryStage.getScene() != null) {
+                UiUtils.switchTheme(primaryStage.getScene(), settings.isDarkMode());
             }
+            
+            append("✅ Settings loaded from " + settingsManager.getConfigPath());
         } catch (Exception e) {
-            // Use defaults
+            append("⚠️ Using default settings");
         }
     }
 
