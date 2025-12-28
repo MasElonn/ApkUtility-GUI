@@ -12,6 +12,7 @@
 
 </div>
 
+
 ---
 
 ## ✨ Features
@@ -71,4 +72,7 @@ java -jar target/ApktoolGui-1.0-SNAPSHOT-shaded.jar
 ```
 
 ---
+<div>
+*MIT LICENSED*
+</div>
 
