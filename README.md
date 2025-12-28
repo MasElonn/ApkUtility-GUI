@@ -72,8 +72,8 @@ java -jar target/ApktoolGui-1.0-SNAPSHOT-shaded.jar
 ```
 
 ---
-## 📄 License
+## 📄 LICENSE
 
-This project is licensed under the **MIT License**.  
+This project is licensed under the **MIT LICENSE**.  
 See the [LICENSE](LICENSE) file for details.
 
