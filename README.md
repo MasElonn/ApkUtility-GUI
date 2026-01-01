@@ -46,8 +46,8 @@
 
 > [!NOTE]
 > **Beta Release**
->[View all releases](github.com/MasElonn/ApkTool-GUI/release)
-
+>[View all releases](github.com/MasElonn/ApkTool-GUI/releases)
+>
 ## 📋 Requirements
 
 - **Java Runtime**: Java 21 or higher
