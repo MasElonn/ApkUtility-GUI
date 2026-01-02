@@ -31,6 +31,16 @@ public class ApkEditorGetInfoConfig {
          private boolean versionName=true;
 
     //setters
+    // String Getters
+    public String getFilterType() { return filterType; }
+    public String getFramework() { return framework; }
+    public String getFrameworkVersion() { return frameworkVersion; }
+    public String getResourceId() { return resourceId; }
+    public String getXmlStrings() { return xmlStrings; }
+    public String getXmlTree() { return xmlTree; }
+    public String getOutputType() { return outputType; }
+
+    // Boolean Setters
     public void setActivities(boolean value){activities=value;}
     public void setAppClass(boolean value){appClass=value;}
     public void setAppIcon(boolean value){appIcon=value;}
@@ -53,8 +63,7 @@ public class ApkEditorGetInfoConfig {
     public void setVersionCode(boolean value){versioncode=value;}
     public void setVersionName(boolean value){versionName=value;}
 
-    //getters
-    // getters
+    // Boolean Getters
     public boolean isActivities() { return activities; }
     public boolean isAppClass() { return appClass; }
     public boolean isAppIcon() { return appIcon; }
@@ -76,5 +85,18 @@ public class ApkEditorGetInfoConfig {
     public boolean isTargetSdkVersion() { return targetSdkversion; }
     public boolean isVersionCode() { return versioncode; }
     public boolean isVersionName() { return versionName; }
+    
+    // String Setters (optional but good to have)
+    public void setFilterType(String v) { this.filterType = v; }
+    public void setFramework(String v) { this.framework = v; }
+    public void setFrameworkVersion(String v) { this.frameworkVersion = v; }
+    public void setResourceId(String v) { this.resourceId = v; }
+    public void setXmlStrings(String v) { this.xmlStrings = v; }
+    public void setXmlTree(String v) { this.xmlTree = v; }
+    public void setOutputType(String v) { this.outputType = v; }
 
+    // Missing Verbose field and getter/setter compared to my impl
+    private boolean verbose;
+    public boolean isVerbose() { return verbose; }
+    public void setVerbose(boolean verbose) { this.verbose = verbose; }
 }

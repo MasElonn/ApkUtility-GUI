@@ -8,11 +8,11 @@ public class SettingsConfig {
 
     public static final String DEFAULT_APKTOOL_PATH = "resources/apktool.jar";
     public static final String DEFAULT_APKEDITOR_PATH = "resources/APKEditor.jar";
-    public static final String DEFAULT_ADB_PATH = isWindows() ? "resources/platform-tools/adb.exe" : "resources/platform-tools/adb";
-    public static final String DEFAULT_ZIPALIGN_PATH = "resources/zipalign";
+    public static final String DEFAULT_ADB_PATH = "resources/bin/" + org.apkutility.app.utils.OSUtils.getOsDirName() + "/platform-tools/adb" + org.apkutility.app.utils.OSUtils.getExecutableExtension();
+    public static final String DEFAULT_ZIPALIGN_PATH = "resources/bin/" + org.apkutility.app.utils.OSUtils.getOsDirName() + "/zipalign" + org.apkutility.app.utils.OSUtils.getExecutableExtension();
     public static final String DEFAULT_APKSIGNER_PATH = "resources/apksigner.jar";
-    public static final String DEFAULT_AAPT_PATH = "resources/aapt";
-    public static final String DEFAULT_AAPT2_PATH = "resources/aapt2";
+    public static final String DEFAULT_AAPT_PATH = "resources/bin/" + org.apkutility.app.utils.OSUtils.getOsDirName() + "/aapt" + org.apkutility.app.utils.OSUtils.getExecutableExtension();
+    public static final String DEFAULT_AAPT2_PATH = "resources/bin/" + org.apkutility.app.utils.OSUtils.getOsDirName() + "/aapt2" + org.apkutility.app.utils.OSUtils.getExecutableExtension();
     public static final String DEFAULT_JAVA_PATH = "java";
     public static final String DEFAULT_FRAMEWORK_PATH = System.getProperty("user.home") + "/.apktool/framework";
     public static final String DEFAULT_WORKING_DIR = System.getProperty("user.home") + "/apktool-workspace";
@@ -32,9 +32,7 @@ public class SettingsConfig {
     private boolean darkMode = DEFAULT_DARK_MODE;
     private boolean autoSave = DEFAULT_AUTO_SAVE;
 
-    private static boolean isWindows() {
-        return System.getProperty("os.name").toLowerCase().contains("win");
-    }
+    // Helper removed as we use OSUtils now
 
     // Getters
     public String getApktoolPath() { return valueOr(apktoolPath, DEFAULT_APKTOOL_PATH); }

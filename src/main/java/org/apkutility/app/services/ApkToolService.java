@@ -172,7 +172,7 @@ public class ApkToolService {
 
             Path configPath = Path.of(System.getProperty("user.home"), ".apktool-gui.properties");
             try (OutputStream out = Files.newOutputStream(configPath)) {
-                props.store(out, "Apktool GUI Settings");
+                props.store(out, "ApkUtility GUI Settings");
             }
             logOutput.append("✅ Settings saved to: " + configPath);
         } catch (Exception e) {

@@ -12,6 +12,7 @@ import org.apkutility.app.services.LogOutput;
 import org.apkutility.app.services.SettingsManager;
 import org.apkutility.app.services.UserNotifier;
 import org.apkutility.app.utils.UiUtils;
+import org.controlsfx.control.HyperlinkLabel;
 
 import java.io.File;
 
@@ -309,8 +310,12 @@ public class SettingsTab {
         Button resetBtn = new Button("🔄 Reset to Defaults");
         resetBtn.getStyleClass().addAll("button-secondary");
         resetBtn.setOnAction(e -> resetToDefaults());
+
+        Button aboutBtn = new Button("About");
+        aboutBtn.getStyleClass().addAll("button-secondary");
+        aboutBtn.setOnAction(e -> showAboutDialog());
         
-        actions.getChildren().addAll(saveBtn, validateBtn, resetBtn);
+        actions.getChildren().addAll(saveBtn, validateBtn, resetBtn, aboutBtn);
         return actions;
     }
     
@@ -480,5 +485,75 @@ public class SettingsTab {
             loadSettingsToUI();
             logOutput.append("🔄 Settings reset to defaults");
         }
+    }
+
+    private void showAboutDialog() {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("About ApkUtility-GUI");
+        dialog.setHeaderText(null);
+
+        // Styling
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
+        dialogPane.getStyleClass().add("card");
+        dialogPane.getButtonTypes().add(ButtonType.CLOSE);
+
+        VBox content = new VBox(20);
+        content.setPadding(new Insets(10));
+        content.setPrefWidth(500);
+
+        // App Section
+        VBox appSection = new VBox(5);
+        Label nameLabel = new Label("ApkUtility-GUI");
+        nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        Label versionLabel = new Label("Version 1.0.0");
+        versionLabel.getStyleClass().add("label-dim");
+        Label descLabel = new Label("GUI wrapper for Android reverse engineering tools.");
+        descLabel.setWrapText(true);
+        appSection.getChildren().addAll(nameLabel, versionLabel, descLabel);
+
+        // Credits Section
+        VBox creditsSection = new VBox(10);
+        Label creditsTitle = new Label("Third-Party Tools & Credits");
+        creditsTitle.getStyleClass().add("subsection-title");
+        
+        GridPane creditsGrid = new GridPane();
+        creditsGrid.setHgap(20);
+        creditsGrid.setVgap(8);
+        //TODO: make it hyperlinked
+        String[][] credits = {
+            {"Apktool", "iBotPeaches"},
+            {"APK Editor", "REAndroid"},
+            {"ADB & Platform Tools", "Google/Android"},
+            {"ApkSigner", "Google/Android"},
+            {"AAPT/AAPT2", "Google/Android"},
+            {"JavaFX", "OpenJFX"},
+            {"ControlsFX", "ControlsFX Team"},
+            {"Icons", "Emoji & Fluent Icons"}
+        };
+        
+
+        for (int i = 1; i < credits.length; i++) {
+            Label tool = new Label(credits[i][0]);
+            tool.getStyleClass().add("field-label");
+            Label author = new Label(credits[i][1]);
+            author.getStyleClass().add("label-dim");;
+            creditsGrid.add(tool, 0, i);
+            creditsGrid.add(author, 1, i);
+        }
+
+        creditsSection.getChildren().addAll(creditsTitle, creditsGrid);
+
+        Separator separator = new Separator();
+        
+        Label footerLabel = new Label("Created with Passion for the Android Community");
+        footerLabel.setStyle("-fx-font-style: italic;");
+        footerLabel.setAlignment(Pos.CENTER);
+        footerLabel.setMaxWidth(Double.MAX_VALUE);
+
+        content.getChildren().addAll(appSection, separator, creditsSection, new Separator()/*, footerLabel*/);
+        
+        dialogPane.setContent(content);
+        dialog.showAndWait();
     }
 }

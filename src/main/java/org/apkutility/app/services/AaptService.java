@@ -22,14 +22,14 @@ public class AaptService {
     public static String getAaptPath() {
         return resolvePath(
             () -> SettingsManager.getInstance().getSettings().getAaptPath(),
-            "resources/aapt", "aapt"
+            "resources/aapt", org.apkutility.app.config.SettingsConfig.DEFAULT_AAPT_PATH
         );
     }
 
     public static String getAapt2Path() {
         return resolvePath(
             () -> SettingsManager.getInstance().getSettings().getAapt2Path(),
-            "resources/aapt2", "aapt2"
+            "resources/aapt2", org.apkutility.app.config.SettingsConfig.DEFAULT_AAPT2_PATH
         );
     }
 

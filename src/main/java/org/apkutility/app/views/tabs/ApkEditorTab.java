@@ -456,14 +456,13 @@ public class ApkEditorTab {
         return section;
     }
 
-    // ========== DIALOG METHODS (Dialog styling added) ==========
 
     private void showDecompileOptionsDialog(Label configSummary) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Decompile Configuration");
         dialog.setHeaderText("Configure decompilation options");
         
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("card");
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);
@@ -514,7 +513,7 @@ public class ApkEditorTab {
         dialog.setTitle("Build Configuration");
         dialog.setHeaderText("Configure build options");
         
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("card");
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);
@@ -559,7 +558,7 @@ public class ApkEditorTab {
         dialog.setTitle("Merge Configuration");
         dialog.setHeaderText("Configure merge options");
         
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("card");
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);
@@ -623,7 +622,7 @@ public class ApkEditorTab {
         dialog.setTitle("Refactor Configuration");
         dialog.setHeaderText("Configure refactor options");
         
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("card");
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);
@@ -676,7 +675,7 @@ public class ApkEditorTab {
         dialog.setTitle("Protect Configuration");
         dialog.setHeaderText("Configure protection options");
         
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("card");
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);

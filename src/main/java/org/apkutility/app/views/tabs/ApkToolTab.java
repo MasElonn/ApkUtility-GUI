@@ -222,7 +222,7 @@ public class ApkToolTab {
         dialog.setHeaderText("Configure decompilation options");
         
         // Add style to dialog
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("card");
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);
@@ -297,7 +297,7 @@ public class ApkToolTab {
         dialog.setTitle("Recompile Configuration");
         dialog.setHeaderText("Configure recompilation options");
         
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);
 

@@ -2,6 +2,8 @@ package org.apkutility.app.services;
 
 import org.apkutility.app.services.executor.CommandExecutor;
 
+import org.apkutility.app.config.ApkEditorGetInfoConfig;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,50 +126,42 @@ public class ApkEditorService {
         commandExecutor.executeCommand(cmd, "Protecting APK...");
     }
 
-    public void executeGetInfo(String inputApk, String outputFile, boolean verbose,
-                               String filterType, String framework, String frameworkVersion, String resourceId,
-                               String xmlStrings, String xmlTree, String outputType,
-                               boolean activities, boolean appClass, boolean appIcon, boolean appName,
-                               boolean appRoundIcon, boolean configurations, boolean dex, boolean forceDelete,
-                               boolean languages, boolean listFiles, boolean listXmlFiles, boolean locales,
-                               boolean minSdkVersion, boolean packageInfo, boolean permissions, boolean resources,
-                               boolean signatures, boolean signaturesBase64, boolean targetSdkVersion,
-                               boolean versionCode, boolean versionName, Consumer<String> outputConsumer) {
+    public void executeGetInfo(String inputApk, String outputFile, ApkEditorGetInfoConfig config, Consumer<String> outputConsumer) {
 
         if (!requireApk(inputApk, "get information")) return;
 
         List<String> cmd = buildCommand("info", "-i", inputApk);
         addOptional(cmd, "-o", outputFile);
-        addOptional(cmd, "-filter-type", filterType);
-        addOptional(cmd, "-framework", framework);
-        addOptional(cmd, "-framework-version", frameworkVersion);
-        addOptional(cmd, "-res", resourceId);
-        addOptional(cmd, "-xmlstrings", xmlStrings);
-        addOptional(cmd, "-xmltree", xmlTree);
-        addOptional(cmd, "-t", outputType);
+        addOptional(cmd, "-filter-type", config.getFilterType());
+        addOptional(cmd, "-framework", config.getFramework());
+        addOptional(cmd, "-framework-version", config.getFrameworkVersion());
+        addOptional(cmd, "-res", config.getResourceId());
+        addOptional(cmd, "-xmlstrings", config.getXmlStrings());
+        addOptional(cmd, "-xmltree", config.getXmlTree());
+        addOptional(cmd, "-t", config.getOutputType());
 
-        if (verbose) cmd.add("-v");
-        if (activities) cmd.add("-activities");
-        if (appClass) cmd.add("-app-class");
-        if (appIcon) cmd.add("-app-icon");
-        if (appName) cmd.add("-app-name");
-        if (appRoundIcon) cmd.add("-app-round-icon");
-        if (configurations) cmd.add("-configurations");
-        if (dex) cmd.add("-dex");
-        if (forceDelete) cmd.add("-f");
-        if (languages) cmd.add("-languages");
-        if (listFiles) cmd.add("-list-files");
-        if (listXmlFiles) cmd.add("-list-xml-files");
-        if (locales) cmd.add("-locales");
-        if (minSdkVersion) cmd.add("-min-sdk-version");
-        if (packageInfo) cmd.add("-package");
-        if (permissions) cmd.add("-permissions");
-        if (resources) cmd.add("-resources");
-        if (signatures) cmd.add("-signatures");
-        if (signaturesBase64) cmd.add("-signatures-base64");
-        if (targetSdkVersion) cmd.add("-target-sdk-version");
-        if (versionCode) cmd.add("-version-code");
-        if (versionName) cmd.add("-version-name");
+        if (config.isVerbose()) cmd.add("-v");
+        if (config.isActivities()) cmd.add("-activities");
+        if (config.isAppClass()) cmd.add("-app-class");
+        if (config.isAppIcon()) cmd.add("-app-icon");
+        if (config.isAppName()) cmd.add("-app-name");
+        if (config.isAppRoundIcon()) cmd.add("-app-round-icon");
+        if (config.isConfigurations()) cmd.add("-configurations");
+        if (config.isDex()) cmd.add("-dex");
+        if (config.isForceDelete()) cmd.add("-f");
+        if (config.isLanguages()) cmd.add("-languages");
+        if (config.isListFiles()) cmd.add("-list-files");
+        if (config.isListXmlFiles()) cmd.add("-list-xml-files");
+        if (config.isLocales()) cmd.add("-locales");
+        if (config.isMinSdkVersion()) cmd.add("-min-sdk-version");
+        if (config.isPackageInfo()) cmd.add("-package");
+        if (config.isPermissions()) cmd.add("-permissions");
+        if (config.isResources()) cmd.add("-resources");
+        if (config.isSignatures()) cmd.add("-signatures");
+        if (config.isSignaturesBase64()) cmd.add("-signatures-base64");
+        if (config.isTargetSdkVersion()) cmd.add("-target-sdk-version");
+        if (config.isVersionCode()) cmd.add("-version-code");
+        if (config.isVersionName()) cmd.add("-version-name");
 
         commandExecutor.executeCommand(cmd, "Getting APK information...", outputConsumer);
     }

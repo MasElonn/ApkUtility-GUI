@@ -69,7 +69,7 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
     }
 
     public void initialize(Stage primaryStage) {
-        primaryStage.setTitle("Apktool GUI v2.12.0");
+        primaryStage.setTitle("ApkUtility GUI v1.0.0");
 
         // Initialize Services & Components
         initializeUIComponents();
@@ -125,7 +125,7 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
         sidebar.getStyleClass().add("sidebar");
         sidebar.setPrefWidth(220);
 
-        Label appTitle = new Label("APKTOOL GUI");
+        Label appTitle = new Label("APKUTILITY GUI");
         appTitle.getStyleClass().add("sidebar-title");
 
         Button apktoolBtn = createSidebarButton("🔨 Apktool", apkToolView);
@@ -230,7 +230,7 @@ public class MainView implements LogOutput, UserNotifier, StatusHandler {
             alert.setContentText(message);
             
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+            dialogPane.getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
             dialogPane.getStyleClass().add("card");
 
             alert.showAndWait();

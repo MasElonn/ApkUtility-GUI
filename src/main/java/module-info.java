@@ -1,13 +1,13 @@
 module org.apkutility.app {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
-    requires javafx.swing;
+    // requires javafx.web; // Removed
+    // requires javafx.swing; // Removed
 
     requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires org.kordamp.ikonli.javafx;
-    requires eu.hansolo.tilesfx;
+    // requires com.dlsc.formsfx; // Removed
+    // requires org.kordamp.ikonli.javafx; // Removed
+    // requires eu.hansolo.tilesfx; // Removed
     requires java.logging;
     requires java.desktop;
 

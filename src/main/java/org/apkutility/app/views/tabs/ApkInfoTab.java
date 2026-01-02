@@ -130,28 +130,7 @@ public class ApkInfoTab {
             setLoadingState(true);
 
             apkEditorService.executeGetInfo(
-                    apkPath, "", true, "", "", "", "", "", "", "",
-                    infoConfig.isActivities(),
-                    infoConfig.isAppClass(),
-                    infoConfig.isAppIcon(),
-                    infoConfig.isAppName(),
-                    infoConfig.isAppRoundIcon(),
-                    infoConfig.isConfigurations(),
-                    infoConfig.isDex(),
-                    infoConfig.isForceDelete(),
-                    infoConfig.isLanguages(),
-                    infoConfig.isListFiles(),
-                    infoConfig.isListXmlFiles(),
-                    infoConfig.isLocales(),
-                    infoConfig.isMinSdkVersion(),
-                    infoConfig.isPackageInfo(),
-                    infoConfig.isPermissions(),
-                    infoConfig.isResources(),
-                    infoConfig.isSignatures(),
-                    infoConfig.isSignaturesBase64(),
-                    infoConfig.isTargetSdkVersion(),
-                    infoConfig.isVersionCode(),
-                    infoConfig.isVersionName(),
+                    apkPath, "", infoConfig,
                     output -> Platform.runLater(() -> handleStreamOutput(output))
             );
         });
@@ -241,7 +220,7 @@ public class ApkInfoTab {
         dialog.setHeaderText("Select the information you want to extract");
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL, ButtonType.APPLY);
         
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("card");
 
         // Grid of checkboxes (kept simplified for brevity, logic remains same as original)

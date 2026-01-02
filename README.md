@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📱 ApkTool GUI
+# 📱 ApkUtility-GUI
 
 **A modern, feature-rich GUI wrapper for common Android reverse engineering tools.**  
 *Built with JavaFX and Passion*
@@ -64,11 +64,12 @@
 ```bash
 ./mvnw clean package
 ```
-*Creates `target/ApktoolGui-1.0-SNAPSHOT-shaded.jar`*
+*Creates `target/ApkUtility-GUI-1.0.0-shaded.jar`*
 
-**Run the application:**
+### 🚀 Running
+
 ```bash
-java -jar target/ApktoolGui-1.0-SNAPSHOT-shaded.jar
+java -jar target/ApkUtility-GUI-1.0.0-shaded.jar
 ```
 
 ---

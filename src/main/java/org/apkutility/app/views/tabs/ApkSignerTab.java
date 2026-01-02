@@ -272,7 +272,7 @@ public class ApkSignerTab {
         
         // Style the dialog
         dialog.getDialogPane().getStylesheets().add(
-            getClass().getResource("/org.apkutility.app/dark-theme.css").toExternalForm()
+            getClass().getResource("/org/apkutility/app/dark-theme.css").toExternalForm()
         );
         
         // Handle result

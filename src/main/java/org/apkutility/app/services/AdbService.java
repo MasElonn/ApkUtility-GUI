@@ -33,9 +33,7 @@ public class AdbService {
         } catch (Exception ignored) {
         }
 
-        String filename = System.getProperty("os.name").toLowerCase().contains("win") ? "adb.exe" : "adb";
-        File defaultFile = new File("resources/platform-tools/" + filename);
-        return defaultFile.exists() ? defaultFile.getAbsolutePath() : "adb";
+        return org.apkutility.app.config.SettingsConfig.DEFAULT_ADB_PATH;
     }
 
     public void getConnectedDevices(Consumer<List<String>> callback) {

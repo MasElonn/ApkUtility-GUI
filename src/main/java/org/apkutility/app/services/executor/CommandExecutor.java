@@ -44,23 +44,44 @@ public class CommandExecutor {
                 pb.redirectErrorStream(true);
                 Process process = pb.start();
 
+                long lastUiUpdate = System.currentTimeMillis();
+                StringBuilder outputBatch = new StringBuilder();
+                int linesInBatch = 0;
+
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        String outputLine = line;
-                        runOnUi(() -> {
-                            if (outputConsumer != null) outputConsumer.accept(outputLine + "\n");
-                            if (logOutput != null) logOutput.append(outputLine + "\n");
-                        });
+                        outputBatch.append(line).append("\n");
+                        linesInBatch++;
+
+                        long now = System.currentTimeMillis();
+                        if (linesInBatch >= 10 || (now - lastUiUpdate > 100)) {
+                            flushBatchToUi(outputBatch.toString(), outputConsumer);
+                            outputBatch.setLength(0);
+                            linesInBatch = 0;
+                            lastUiUpdate = now;
+                        }
+                    }
+                    // Flush remaining
+                    if (outputBatch.length() > 0) {
+                        flushBatchToUi(outputBatch.toString(), outputConsumer);
                     }
                 }
-
+                
                 int exitCode = process.waitFor();
                 runOnUi(() -> handleCompletion(exitCode, outputConsumer));
 
             } catch (Exception e) {
                 runOnUi(() -> handleError(e, outputConsumer));
             }
+        });
+    }
+
+    private void flushBatchToUi(String batch, Consumer<String> outputConsumer) {
+        if (batch.isEmpty()) return;
+        runOnUi(() -> {
+            if (outputConsumer != null) outputConsumer.accept(batch);
+            if (logOutput != null) logOutput.append(batch);
         });
     }
 

@@ -26,8 +26,7 @@ public class ZipAlignService {
         } catch (Exception ignored) {
         }
 
-        File defaultPath = new File("resources/zipalign");
-        return defaultPath.exists() ? defaultPath.getAbsolutePath() : "";
+        return org.apkutility.app.config.SettingsConfig.DEFAULT_ZIPALIGN_PATH;
     }
 
     public void alignApk(String apkPath, String outputPath) {

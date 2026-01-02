@@ -116,7 +116,7 @@ public class SettingsManager {
         props.setProperty(KEY_AUTO_SAVE, String.valueOf(settings.isAutoSave()));
         
         try (OutputStream out = Files.newOutputStream(configPath)) {
-            props.store(out, "ApkTool GUI Settings");
+            props.store(out, "ApkUtility GUI Settings");
         }
     }
     
