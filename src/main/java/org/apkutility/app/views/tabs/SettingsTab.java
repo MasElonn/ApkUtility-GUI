@@ -12,9 +12,13 @@ import org.apkutility.app.services.LogOutput;
 import org.apkutility.app.services.SettingsManager;
 import org.apkutility.app.services.UserNotifier;
 import org.apkutility.app.utils.UiUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import org.controlsfx.control.HyperlinkLabel;
 
 import java.io.File;
+import java.awt.Desktop;
+import java.net.URI;
 
 /**
  * Settings Tab for configuring tool paths and application preferences
@@ -522,22 +526,34 @@ public class SettingsTab {
         creditsGrid.setVgap(8);
         //TODO: make it hyperlinked
         String[][] credits = {
-            {"Apktool", "iBotPeaches"},
-            {"APK Editor", "REAndroid"},
-            {"ADB & Platform Tools", "Google/Android"},
-            {"ApkSigner", "Google/Android"},
-            {"AAPT/AAPT2", "Google/Android"},
-            {"JavaFX", "OpenJFX"},
-            {"ControlsFX", "ControlsFX Team"},
-            {"Icons", "Emoji & Fluent Icons"}
+            {"Apktool", "iBotPeaches", "https://github.com/iBotPeaches/Apktool"},
+            {"APK Editor", "REAndroid", "https://github.com/REAndroid/APKEditor"},
+            {"ADB & Platform Tools", "Android", "https://developer.android.com/studio/releases/platform-tools"},
+            {"ApkSigner", "Android", "https://developer.android.com/studio/command-line/apksigner"},
+            {"AAPT/AAPT2", "Android", "https://developer.android.com/studio/command-line/aapt2"},
+            {"JavaFX", "OpenJFX", "https://openjfx.io/"},
+            {"ControlsFX", "ControlsFX Team", "https://github.com/controlsfx/controlsfx"},
+            {"Icons", "Emoji & Fluent Icons", "https://github.com/microsoft/fluentui-system-icons"}
         };
         
-
-        for (int i = 1; i < credits.length; i++) {
-            Label tool = new Label(credits[i][0]);
-            tool.getStyleClass().add("field-label");
+        for (int i = 0; i < credits.length; i++) {
+            final String url = credits[i][2];
+            HyperlinkLabel tool = new HyperlinkLabel(credits[i][0]);
+            tool.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    try {
+                        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                            Desktop.getDesktop().browse(new URI(url));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            //tool.getStyleClass().add("field-label");
             Label author = new Label(credits[i][1]);
-            author.getStyleClass().add("label-dim");;
+            author.getStyleClass().add("label-dim");
             creditsGrid.add(tool, 0, i);
             creditsGrid.add(author, 1, i);
         }
